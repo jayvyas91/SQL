@@ -1,0 +1,99 @@
+#: Find the booth assignments for vendor 7 for any market date that occurred between April 3, 2019, and May 16, 2019, including both the dates
+
+select
+
+*
+
+from `Market.vendor_booth_assignments`
+
+where vendor_id = 7 and market_date between '2019-04-03' and '2019-05-16'
+
+# Select products which are small, medium or large
+
+select 
+
+*
+
+from `Market.product`
+
+where product_size IN ('small','medium','large')
+
+
+#Find all the products from the product table without sizes
+
+select 
+
+*
+
+from `Market.product`
+
+where product_size IS NULL
+#Q: Select products which are not small, medium or large
+
+select 
+
+*
+
+from `Market.product`
+
+where product_size NOT IN ('small','medium','large') or product_size is null
+
+#Q: Replace missing product size(null only) with ‘missing_value’
+
+select 
+
+product_size, ifnull(product_size, 'missing_value') as updated
+
+from `Market.product`
+
+
+#Q: Find all customers whose first names begin with J
+
+select
+
+*
+
+from `Market.customer`
+where upper(customer_first_name) like 'J%'
+
+#Q: Find customer first names that end with e
+select
+
+*
+
+from `Market.customer`
+where lower(customer_first_name) like '%e'
+
+#Q: Get customers with first name starting with J and last name ending with e and sort the results by first and last name respectively
+
+select
+
+*
+
+from `Market.customer`
+where upper(customer_first_name) like 'J%'and lower(customer_last_name) like '%e'
+
+order by customer_first_name,customer_last_name
+
+#Q: For every vendor identify the ones who deal with 'fresh' produce and those which don't
+
+select *, 
+
+case when lower(vendor_type) like '%fresh%' then 'Y'
+else 'N'end as fresh_produce
+
+from `Market.vendor`
+
+#Q: Get all the details of the products where product_category contains ‘Fresh’
+select *
+
+from `Market.vendor`
+
+where lower(vendor_type) like '%fresh%'
+#Q: Give details of all customers who bought products from vendor 7 on '2019-04-03'
+
+select *
+
+from `Market.customer`
+
+where (select vendor_id from `Market.customer_purchases` where vendor_id = 7)
