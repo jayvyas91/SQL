@@ -1,0 +1,10 @@
+SubQuery
+
+##Display all product details whose product_category contains fresh.
+
+select *
+
+from `Market.product`
+
+where product_category_id in (select product_category_id from `Market.product_category` where lower(product_category_name) like '%fresh%')
+
