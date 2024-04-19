@@ -1,0 +1,15 @@
+##Display all product details whose product_category contains fresh.
+
+select *
+
+from `Market.product`
+
+where product_category_id in (select product_category_id from `Market.product_category` where lower(product_category_name) like '%fresh%')
+
+##Give details of all customers who bought products from vendor 7 on 2019-04-03
+
+select * 
+
+from `Market.customer_purchases` 
+
+where market_date in (select market_date from `Market.vendor_inventory` where vendor_id = 7 and market_date ='2019-04-03')
